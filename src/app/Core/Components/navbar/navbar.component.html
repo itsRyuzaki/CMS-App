@@ -1,0 +1,28 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-light main-navbar">
+  <button
+    class="navbar-toggler"
+    type="button"
+    data-toggle="collapse"
+    data-target="#appNavbarToggler"
+    aria-controls="appNavbarToggler"
+    aria-expanded="false"
+    aria-label="Toggle navigation"
+  >
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <a class="navbar-brand" href="#">{{ appName }}</a>
+  <div class="navbar-content">
+    <div class="collapse navbar-collapse navbar-pills" id="appNavbarToggler">
+      <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+        <li *ngFor="let navItem of navItems" class="nav-item">
+          <a
+            class="nav-link"
+            [ngClass]="navItem.isActive ? 'selected-pill' : ''"
+            [href]="navItem.link"
+            >{{ navItem.title }}</a
+          >
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
