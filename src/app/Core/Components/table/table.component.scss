@@ -1,0 +1,31 @@
+@import "./../../scss/theme";
+
+table {
+  table-layout: fixed;
+  text-align: center;
+}
+
+th,
+td {
+  &:first-child {
+    text-align: left;
+  }
+}
+
+th {
+  color: $heading-color;
+  font-weight: 500;
+}
+
+.table-content {
+  box-shadow: 0 2px 20px rgb(49 54 68 / 9%);
+  border-radius: 4px;
+  background-color: $table-bg-color;
+  padding: 20px;
+}
+
+.table-heading {
+  padding: 0 0 20px 20px;
+  color: $heading-color;
+  font-weight: 400;
+}
