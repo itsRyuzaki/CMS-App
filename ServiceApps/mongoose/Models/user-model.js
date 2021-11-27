@@ -1,21 +1,13 @@
 import { Model, Schema } from "mongoose";
-import { collectionNames } from "../config";
+import { ADDRESS_SCHEMA, collectionNames } from "../config";
 
 const UserSchema = new Schema({
   userId: String,
   name: String,
   dateOfBirth: String,
-  address: {
-    area: String,
-    pincode: String,
-    city: String,
-    state: String,
-  },
+  address: ADDRESS_SCHEMA,
   gender: String,
-  phoneNumber: {
-    primary: String,
-    secondary: [String],
-  },
+  phoneNumber: String,
   selectedClinicId: String,
 });
 

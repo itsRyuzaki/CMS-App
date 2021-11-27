@@ -12,8 +12,14 @@ export const DATE_SCHEMA = {
     year: Number
 }
 
+export const ADDRESS_SCHEMA = {
+  area: String,
+  pincode: String,
+  city: String,
+  state: String,
+};
+
 export const defaultUserData = {
-  userId: String,
   name: 'Akshit',
   dateOfBirth: '1996-03-01',
   address: {
@@ -23,8 +29,6 @@ export const defaultUserData = {
     state: 'Delhi',
   },
   gender: 'Male',
-  phoneNumber: {
-    primary: '198237489',
-  },
+  phoneNumber:'198237489',
   selectedClinicId: String,
 };

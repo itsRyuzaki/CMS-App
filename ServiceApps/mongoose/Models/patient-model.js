@@ -1,5 +1,5 @@
 import { Model, Schema } from "mongoose";
-import { collectionNames } from "../config";
+import { ADDRESS_SCHEMA, collectionNames } from "../config";
 
 const PatientSchema = new Schema({
   clinicId: String,
@@ -9,16 +9,11 @@ const PatientSchema = new Schema({
     value: Number,
     lastModified: String,
   },
-  address: {
-    area: String,
-    pincode: String,
-    city: String,
-    state: String,
-  },
+  address: ADDRESS_SCHEMA,
   gender: String,
   phoneNumber: {
     primary: String,
-    secondary: [String],
+    secondary: String,
   },
   paymentDetails: [
     {
