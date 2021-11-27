@@ -1,0 +1,30 @@
+@import "../variables/breakpoints";
+
+// max-width : 576px
+@mixin sm-max {
+  @media only screen and (max-width: $screen-sm-max) {
+    @content;
+  }
+}
+
+// min-width : 768px
+@mixin md-min {
+  @media only screen and (min-width: $screen-md) {
+    @content;
+  }
+}
+
+// max-width : 992px
+@mixin md-max {
+  @media only screen and (max-width: $screen-md-max) {
+    @content;
+  }
+}
+
+// min-width : 992px
+@mixin lg-min {
+  @media only screen and (min-width: $screen-lg) {
+    @content;
+  }
+}
+
