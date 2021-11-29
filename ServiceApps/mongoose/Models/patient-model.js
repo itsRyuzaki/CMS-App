@@ -15,19 +15,6 @@ const PatientSchema = new Schema({
     primary: String,
     secondary: String,
   },
-  paymentDetails: [
-    {
-      categoryId: String,
-      totalAmount: Number,
-      paidAmount: [
-        {
-          value: Number,
-          date: String,
-        },
-      ],
-      isComplete: Boolean,
-    },
-  ],
   isDeleted: Boolean,
 });
 
