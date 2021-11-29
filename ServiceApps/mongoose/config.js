@@ -3,7 +3,8 @@ export const collectionNames = {
     patient: 'Patient',
     category: 'Category',
     user: 'User',
-    medicalDetail: 'MedicalDetail'
+    medicalDetail: 'MedicalDetail',
+    paymentDetail: 'PaymentDetail',
 }
 
 export const DATE_SCHEMA = {
