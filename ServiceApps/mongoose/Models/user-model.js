@@ -1,5 +1,5 @@
-import { Model, Schema } from "mongoose";
-import { ADDRESS_SCHEMA, collectionNames } from "../config";
+import { model, Schema } from "mongoose";
+import { ADDRESS_SCHEMA, collectionNames } from "../config.js";
 
 const UserSchema = new Schema({
   userId: String,
@@ -11,4 +11,4 @@ const UserSchema = new Schema({
   selectedClinicId: String,
 });
 
-export const UserModel = new Model(collectionNames.user, UserSchema);
+export const UserModel = new model(collectionNames.user, UserSchema);

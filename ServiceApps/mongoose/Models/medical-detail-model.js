@@ -1,5 +1,6 @@
-import { Model, Schema } from "mongoose";
-import { collectionNames, DATE_SCHEMA } from "../config";
+import mongoose from "mongoose";
+const { model, Schema } = mongoose;
+import { collectionNames, DATE_SCHEMA } from "../config.js";
 
 const MedicalDetailSchema = new Schema({
   patientId: String,
@@ -19,7 +20,7 @@ const MedicalDetailSchema = new Schema({
   },
 });
 
-export const MedicalDetailModel = new Model(
+export const MedicalDetailModel = new model(
   collectionNames.medicalDetail,
   MedicalDetailSchema
 );

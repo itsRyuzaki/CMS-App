@@ -1,5 +1,6 @@
-import { Model, Schema } from "mongoose";
-import { collectionNames } from "../config";
+import mongoose from "mongoose";
+const { model, Schema } = mongoose;
+import { collectionNames } from "../config.js";
 
 const ClinicSchema = new Schema({
   clinicId: String,
@@ -15,4 +16,4 @@ const ClinicSchema = new Schema({
   isDeleted: Boolean,
 });
 
-export const ClinicModel = new Model(collectionNames.clinic, ClinicSchema);
+export const ClinicModel = new model(collectionNames.clinic, ClinicSchema);

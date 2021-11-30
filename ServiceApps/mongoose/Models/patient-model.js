@@ -1,5 +1,6 @@
-import { Model, Schema } from "mongoose";
-import { ADDRESS_SCHEMA, collectionNames } from "../config";
+import mongoose from "mongoose";
+const { model, Schema } = mongoose;
+import { ADDRESS_SCHEMA, collectionNames } from "../config.js";
 
 const PatientSchema = new Schema({
   clinicId: String,
@@ -15,7 +16,7 @@ const PatientSchema = new Schema({
     primary: String,
     secondary: String,
   },
-  isDeleted: Boolean,
+  isDeleted: { type: Boolean, default: false },
 });
 
-export const PatientModel = new Model(collectionNames.patient, PatientSchema);
+export const PatientModel = new model(collectionNames.patient, PatientSchema);
