@@ -1,4 +1,4 @@
-export const collectionNames = {
+export const COLLECTION_NAMES = {
     clinic: 'Clinic',
     patient: 'Patient',
     category: 'Category',
@@ -21,7 +21,7 @@ export const ADDRESS_SCHEMA = {
 };
 
 export const defaultUserData = {
-  name: 'Akshit',
+  name: 'Akshit Verma',
   dateOfBirth: '1996-03-01',
   address: {
     area: 'Naraina',
@@ -31,5 +31,15 @@ export const defaultUserData = {
   },
   gender: 'Male',
   phoneNumber:'198237489',
-  selectedClinicId: String,
+};
+
+export const defaultClinicData = {
+  name: "Verma Clinic",
+  address: {
+    area: "Naraina",
+    pincode: "110028",
+    city: "New Delhi",
+    state: "Delhi",
+  },
+  doctorInCharge: 'Dr. Akshit Verma',
 };
