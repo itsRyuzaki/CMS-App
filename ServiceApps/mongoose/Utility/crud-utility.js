@@ -1,10 +1,4 @@
-const generateErrorDetails = (response, err) => {
-  response["errorDetails"] = {
-    code: 500,
-    description: "",
-    logs: err,
-  };
-};
+import { generateErrorDetails } from "./helper-utility.js";
 
 /**
  * CRUD Utility for mongoose
@@ -23,7 +17,7 @@ export const crudUtil = {
 
     return response;
   },
-  read: async (condition, projection, queryOptions, model) => {
+  findAll: async (condition, projection, queryOptions, model) => {
     let response = {
       data: null,
       errorDetails: null,
