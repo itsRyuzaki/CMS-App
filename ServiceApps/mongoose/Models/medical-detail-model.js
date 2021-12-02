@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 const { model, Schema } = mongoose;
-import { collectionNames, DATE_SCHEMA } from "../config.js";
+import { COLLECTION_NAMES, DATE_SCHEMA } from "../Config/global-config.js";
 
 const MedicalDetailSchema = new Schema({
   patientId: String,
@@ -21,6 +21,6 @@ const MedicalDetailSchema = new Schema({
 });
 
 export const MedicalDetailModel = new model(
-  collectionNames.medicalDetail,
+  COLLECTION_NAMES.medicalDetail,
   MedicalDetailSchema
 );

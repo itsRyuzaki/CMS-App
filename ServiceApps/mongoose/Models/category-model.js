@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 const { model, Schema } = mongoose;
-import { collectionNames } from "../config.js";
+import { COLLECTION_NAMES } from "../Config/global-config.js";
 
 const CategorySchema = new Schema({
   categoryId: String,
@@ -9,6 +9,6 @@ const CategorySchema = new Schema({
 });
 
 export const CategoryModel = new model(
-  collectionNames.category,
+  COLLECTION_NAMES.category,
   CategorySchema
 );

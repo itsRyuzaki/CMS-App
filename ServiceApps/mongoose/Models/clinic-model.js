@@ -1,19 +1,14 @@
 import mongoose from "mongoose";
 const { model, Schema } = mongoose;
-import { collectionNames } from "../config.js";
+import { ADDRESS_SCHEMA, COLLECTION_NAMES } from "../Config/global-config.js";
 
 const ClinicSchema = new Schema({
   clinicId: String,
   userId: String,
   name: String,
-  address: {
-    area: String,
-    pincode: String,
-    city: String,
-    state: String,
-  },
-  staffDetails: [{ name: String, age: Number, phoneNumber: String }],
-  isDeleted: Boolean,
+  doctorInCharge: String,
+  address: ADDRESS_SCHEMA,
+  isDeleted: { type: Boolean, default: false },
 });
 
-export const ClinicModel = new model(collectionNames.clinic, ClinicSchema);
+export const ClinicModel = new model(COLLECTION_NAMES.clinic, ClinicSchema);

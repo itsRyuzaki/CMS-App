@@ -1,5 +1,6 @@
-import { model, Schema } from "mongoose";
-import { ADDRESS_SCHEMA, collectionNames } from "../config.js";
+import mongoose from "mongoose";
+const { model, Schema } = mongoose;
+import { ADDRESS_SCHEMA, COLLECTION_NAMES } from "../Config/global-config.js";
 
 const UserSchema = new Schema({
   userId: String,
@@ -11,4 +12,4 @@ const UserSchema = new Schema({
   selectedClinicId: String,
 });
 
-export const UserModel = new model(collectionNames.user, UserSchema);
+export const UserModel = new model(COLLECTION_NAMES.user, UserSchema);

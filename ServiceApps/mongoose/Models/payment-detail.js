@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 const { model, Schema } = mongoose;
-import { collectionNames } from "../config.js";
+import { COLLECTION_NAMES } from "../Config/global-config.js";
 
 const PaymentDetailSchema = new Schema({
   patientId: String,
@@ -17,9 +17,10 @@ const PaymentDetailSchema = new Schema({
       date: String,
     },
   ],
+  dueAmount: Number
 });
 
 export const PaymentDetailModel = new model(
-  collectionNames.paymentDetail,
+  COLLECTION_NAMES.paymentDetail,
   PaymentDetailSchema
 );
