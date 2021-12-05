@@ -1,0 +1,95 @@
+@import "../../Core/scss/theme";
+
+.form-group {
+  margin-bottom: 10px;
+}
+
+label,
+legend {
+  color: $primary-text-color;
+  margin-bottom: 10px;
+  font-size: 16px;
+  font-weight: 500;
+}
+legend{
+  padding-top: 0px;
+}
+
+// Sections inside a wrapper
+.sub-card-heading
+{
+  color: $primary-text-color
+}
+
+// Content inside input fields
+.form-control,
+.form-control:focus {
+  background-color: rgba(237,241,245,0.5);
+  color: $primary-text-color;
+  padding: 6px 15px;
+  border-radius: 4px;
+  font-weight: 500;
+}
+
+.form-control:focus {
+  box-shadow: 0 2px 20px rgb(49 54 68 / 9%);
+  border-color: $background-color;
+  background-color: $cards-bg-color;
+}
+
+// Only for radio button labels
+.form-check-label {
+  margin-left: 3px;
+  font-size: 14px;
+}
+
+// Styles for complete section
+.section-wrapper {
+  box-shadow: 0 2px 20px rgb(49 54 68 / 9%);
+  border-radius: 4px;
+  background-color: $cards-bg-color;
+  padding: 20px;
+  margin-bottom: 40px;
+  @include lg-min {
+    padding: 40px;
+  }
+}
+
+// Extra styles for payment wrapper
+.payment-wrapper{
+  @include lg-only{
+    width: 75% !important;
+  }
+ @include xl-min{
+   width: 50% !important;
+ }
+}
+
+.personal-details-wrapper {
+  @include md-min {
+    border-right: 1px solid grey;
+  }
+  @include md-only {
+    padding-right: 20px;
+  }
+  @include lg-min {
+    padding-right: 40px;
+  }
+}
+
+.address-details-wrapper {
+  @include lg-min {
+    padding-left: 40px;
+  }
+  @include md-only {
+    padding-left: 20px;
+  }
+}
+
+.center-btn{
+  text-align: center;
+}
+
+.due-amount{
+  background-color: rgba(237,241,245) !important;
+}
