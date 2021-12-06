@@ -1,0 +1,11 @@
+@import "./Core/scss/theme";
+
+.global-content{
+    padding: 20px $global-padding-sm;
+  @include md-min {
+    padding: 30px $global-padding-md;
+  }
+  @include lg-min {
+    padding: 40px $global-padding-lg;
+  }
+}
