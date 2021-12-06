@@ -1,0 +1,43 @@
+<span [ngSwitch]="btnId" (click)="onClickHandler()">
+  <!-- Dashboard Search Button -->
+  <button class="btn btn-dark-bg btn-elevated" *ngSwitchCase="buttonIds.searchRedirect">
+    <i class="bi bi-search"></i
+    ><span class="btn-icon-text-last">{{ config.label }}</span>
+  </button>
+
+  <!-- Add Patient Button -->
+  <button class="btn btn-success btn-elevated" *ngSwitchCase="buttonIds.addPatient">
+    <i class="bi bi-plus-circle-fill"></i
+    ><span class="btn-icon-text-last">{{ config.label }}</span>
+  </button>
+
+  <!-- Add Category Button -->
+  <button class="btn btn-outline-success" *ngSwitchCase="buttonIds.addCategory">
+    <i class="bi bi-plus-circle-fill"></i
+    ><span class="btn-icon-text-last">{{ config.label }}</span>
+  </button>
+
+  <!-- Save Category Button -->
+  <button class="btn btn-dark-bg" *ngSwitchCase="buttonIds.saveCategory">
+    <span class="btn-icon-text-first">{{ config.label }}</span>
+    <i class="bi bi-upload"></i>
+  </button>
+
+  <!-- Submit Form Button -->
+  <button
+    class="btn btn-lg btn-dark-bg btn-elevated"
+    *ngSwitchCase="buttonIds.submitPatientForm"
+    [disabled]="isLoading"
+  >
+    <div *ngIf="isLoading" class="btn-loader">
+      <div class="spinner-border" role="status"></div>
+      <span class="btn-icon-text-last">{{ config.loadingLabel }}</span>
+    </div>
+    <div *ngIf="!isLoading">
+      <span class="btn-icon-text-first">{{ config.label }}</span>
+      <i class="bi bi-upload"></i>
+    </div>
+  </button>
+
+  <ng-template *ngSwitchDefault=""></ng-template>
+</span>

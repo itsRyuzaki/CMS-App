@@ -1,0 +1,35 @@
+@import "../../scss/theme";
+
+.btn {
+  padding: 6px 20px !important;
+}
+
+.btn-icon-text-last {
+  margin-left: 10px;
+}
+
+.btn-icon-text-first {
+  margin-right: 10px;
+}
+
+.btn-dark-bg {
+  background-color: $inverted-bg-color;
+  color: $inverted-text-color;
+  &:hover {
+    color: white;
+  }
+}
+
+.btn-elevated {
+  transition: all 0.2s ease-out;
+  &:hover {
+    box-shadow: 0 14px 32px 0 rgba(0, 0, 0, 0.3);
+    opacity: 1;
+    transform: translateY(-3px);
+  }
+}
+
+.btn-loader {
+  display: flex;
+  margin: 2px;
+}
