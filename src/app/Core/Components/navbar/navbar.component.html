@@ -10,7 +10,7 @@
   >
     <span class="navbar-toggler-icon"></span>
   </button>
-  <a class="navbar-brand" href="#">{{ appName }}</a>
+  <a class="navbar-brand" routerLink="/">{{ appName }}</a>
   <div class="navbar-content">
     <div class="collapse navbar-collapse navbar-pills" id="appNavbarToggler">
       <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
@@ -18,7 +18,7 @@
           <a
             class="nav-link"
             [ngClass]="navItem.isActive ? 'selected-pill' : ''"
-            [href]="navItem.link"
+            [routerLink]="navItem.link"
             >{{ navItem.title }}</a
           >
         </li>
