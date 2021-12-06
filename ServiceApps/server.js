@@ -367,7 +367,7 @@ app.post(ENDPOINT_CONFIG.addCategory, async (req, res) => {
   if (response.errorDetails !== null) {
     res.status(420);
   } else {
-    response = req.body;
+    response['data'] = req.body;
   }
   res.send(response);
 });
