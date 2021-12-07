@@ -27,7 +27,7 @@ export const TABLE_CONFIG: { [x: string]: ITableConfig } = {
       },
       {
         property: 'dueAmount',
-        label: 'Due Amount',
+        label: 'Due Amount(in ₹)',
       },
     ],
     navigationConfig: {

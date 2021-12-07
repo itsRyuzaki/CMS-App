@@ -15,6 +15,7 @@ export class TableComponent implements OnInit {
   @Input() showEditIcon = false;
   @Input() showDeleteIcon = false;
   @Input() isRowClickable = true;
+  @Input() isLoading = false;
 
   @Output() isDeleteIconClicked = new EventEmitter();
 
