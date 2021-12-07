@@ -1,7 +1,7 @@
-<div>
+<div class="table-wrapper">
   <h3 class="table-heading">{{ tableDataConfig.tableHeading }}</h3>
   <div class="table-content table-responsive">
-    <table class="table table-hover table-borderless">
+    <table class="table table-hover table-borderless align-middle">
       <thead>
         <tr>
           <th
@@ -10,11 +10,29 @@
           >
             {{ colConfig.label }}
           </th>
+          <th *ngIf="showViewIcon" scope="col">View</th>
+          <th *ngIf="showEditIcon" scope="col">Edit</th>
+          <th *ngIf="showDeleteIcon" scope="col">Remove</th>
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let rowConfig of rowDataConfig">
-          <td *ngFor="let rowData of rowConfig.rowData">{{ rowData.value }}</td>
+        <tr
+          *ngFor="let rowConfig of rowDataConfig"
+          [ngClass]="isRowClickable ? 'row-click-behavior' : ''"
+          (click)="onRowClicked(rowConfig)"
+        >
+          <td *ngFor="let colConfig of tableDataConfig.columnConfig">
+            {{ rowConfig.rowData[colConfig.property] }}
+          </td>
+          <td *ngIf="showViewIcon" (click)="onViewIconClicked(rowConfig)">
+            <i class="bi bi-eye-fill"></i>
+          </td>
+          <td *ngIf="showEditIcon" (click)="onEditIconClicked(rowConfig)">
+            <i class="bi bi-pencil-fill"></i>
+          </td>
+          <td *ngIf="showDeleteIcon" (click)="onDeleteIconClicked(rowConfig)">
+            <i class="bi bi-trash-fill"></i>
+          </td>
         </tr>
       </tbody>
     </table>

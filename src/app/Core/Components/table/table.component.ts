@@ -1,5 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Router } from '@angular/router';
 import { IRowDataConfig, ITableConfig } from '../../interfaces/table.interface';
+import { TABLE_CONFIG } from './table.config';
 
 @Component({
   selector: 'app-table',
@@ -7,32 +9,41 @@ import { IRowDataConfig, ITableConfig } from '../../interfaces/table.interface';
   styleUrls: ['./table.component.scss'],
 })
 export class TableComponent implements OnInit {
-  rowDataConfig: IRowDataConfig[];
+  @Input() tableId: string;
+  @Input() rowDataConfig: IRowDataConfig[];
+  @Input() showViewIcon = false;
+  @Input() showEditIcon = false;
+  @Input() showDeleteIcon = false;
+  @Input() isRowClickable = true;
+
+  @Output() isDeleteIconClicked = new EventEmitter();
+
   tableDataConfig: ITableConfig;
-  constructor() {}
+  constructor(private readonly router: Router) {}
 
   ngOnInit(): void {
-    this.tableDataConfig = {
-      columnConfig: [
-        { property: 'patientName', label: 'Name' },
-        { property: 'transactionCount', label: 'Count' },
-        { property: 'totalAmount', label: 'Total Amount' },
-      ],
-      clickConfig: { navigationPrefix: '/' },
-      tableHeading: 'Pending',
-    };
+    this.tableDataConfig = TABLE_CONFIG[this.tableId];
+  }
 
-    this.rowDataConfig = [
-      {
-        rowData: [
-          {
-            property: 'patientName',
-            value: 'Akshit',
-          },
-          { property: 'transactionCount', value: '2' },
-          { property: 'totalAmount', value: '1234' },
-        ],
-      },
-    ];
+  onViewIconClicked(rowConfig: IRowDataConfig): void {
+    this.router.navigate([
+      ...this.tableDataConfig.navigationConfig.viewURL(rowConfig.id),
+    ]);
+  }
+
+  onEditIconClicked(rowConfig: IRowDataConfig): void {
+    this.router.navigate([
+      ...this.tableDataConfig.navigationConfig.editURL(rowConfig.id),
+    ]);
+  }
+
+  onDeleteIconClicked(rowConfig: IRowDataConfig): void {
+    this.isDeleteIconClicked.emit(rowConfig);
+  }
+
+  onRowClicked(rowConfig: IRowDataConfig): void {
+    if (this.isRowClickable) {
+      this.onViewIconClicked(rowConfig);
+    }
   }
 }
