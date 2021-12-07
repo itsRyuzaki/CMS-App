@@ -6,10 +6,7 @@ const PatientSchema = new Schema({
   clinicId: String,
   patientId: String,
   name: String,
-  age: {
-    value: Number,
-    lastModified: String,
-  },
+  age: Number,
   address: ADDRESS_SCHEMA,
   gender: String,
   phoneNumber: {
@@ -18,6 +15,7 @@ const PatientSchema = new Schema({
   },
   totalVisits: Number,
   pendingAmount: Number,
+  lastModified: String,
   isDeleted: { type: Boolean, default: false },
 });
 
