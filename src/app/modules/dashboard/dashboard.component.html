@@ -15,7 +15,8 @@
   [showViewIcon]="true"
   [showEditIcon]="true"
   [tableId]="tableIds.pending"
-  [rowDataConfig]="pendingPatientsData"
+  [rowDataConfig]="pendingPatients.data"
+  [isLoading]="pendingPatients.isLoading"
 ></app-table>
 
 <!-- Follow Up Patients Table -->
@@ -23,5 +24,6 @@
   [showViewIcon]="true"
   [showEditIcon]="true"
   [tableId]="tableIds.followUp"
-  [rowDataConfig]="followUpPatientsData"
+  [rowDataConfig]="followUpPatients.data"
+  [isLoading]="followUpPatients.isLoading"
 ></app-table>
