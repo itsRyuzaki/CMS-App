@@ -1,9 +1,13 @@
 export interface ITableConfig {
-  clickConfig?: { navigationPrefix: string };
+  navigationConfig?: {
+    viewURL?: (id: string) => string[];
+    editURL?: (id: string) => string[];
+  };
   tableHeading?: string;
   columnConfig: { property: string; label: string }[];
 }
 
 export interface IRowDataConfig {
-  rowData: { property: string; value: string }[];
+  rowData: { [x: string]: string };
+  id?: string;
 }
