@@ -1,0 +1,8 @@
+@import "./../../scss/theme";
+
+h2 {
+  color: $primary-text-color;
+  margin-bottom: 40px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid $primary-text-color;
+}
