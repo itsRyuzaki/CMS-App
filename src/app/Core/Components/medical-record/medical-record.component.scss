@@ -1,0 +1,13 @@
+@import "./../../scss/theme";
+
+h6,
+p {
+  color: $primary-text-color;
+}
+
+p {
+  white-space: pre;
+  font-size: 0.9rem;
+  line-height: 1.5;
+  margin-bottom: 2px;
+}

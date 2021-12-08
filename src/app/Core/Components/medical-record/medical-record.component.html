@@ -1,0 +1,51 @@
+<mat-expansion-panel>
+  <mat-expansion-panel-header>
+    <mat-panel-title> Category: {{ category }} </mat-panel-title>
+    <mat-panel-description>
+      Last Visit: {{ recordConfig.dateOfVisit }}
+    </mat-panel-description>
+  </mat-expansion-panel-header>
+  <h6>
+    Next Follow-Up: <span>{{ recordConfig.followUpDate }}</span>
+  </h6>
+  <hr />
+  <div class="row">
+    <div class="col-lg-6 col-xl-4">
+      <h6>Physical Examination</h6>
+      <p>
+        Blood Pressure:
+        <span>{{ recordConfig.physicalExamination.bloodPressure }}</span>
+      </p>
+      <p>
+        Temperature
+        <span>{{ recordConfig.physicalExamination.temperature }}</span>
+      </p>
+      <p>
+        Pulse: <span>{{ recordConfig.physicalExamination.pulse }}</span>
+      </p>
+      <p>
+        Weight: <span>{{ recordConfig.physicalExamination.weight }}</span>
+      </p>
+    </div>
+    <div class="col-lg-6 col-xl-4">
+      <h6>Symptoms</h6>
+      <p>{{ recordConfig.symptoms }}</p>
+    </div>
+    <div class="col-lg-6 col-xl-4">
+      <h6>Investigation</h6>
+      <p>{{ recordConfig.investigation }}</p>
+    </div>
+    <div class="col-lg-6 col-xl-4">
+      <h6>Diagnosis</h6>
+      <p>{{ recordConfig.diagnosis }}</p>
+    </div>
+    <div class="col-lg-6 col-xl-4">
+      <h6>Treatment</h6>
+      <p>{{ recordConfig.treatment }}</p>
+    </div>
+    <div class="col-lg-6 col-xl-4">
+      <h6>Notes</h6>
+      <p>{{ recordConfig.notes }}</p>
+    </div>
+  </div>
+</mat-expansion-panel>
