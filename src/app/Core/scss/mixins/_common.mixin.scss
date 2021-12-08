@@ -1,0 +1,7 @@
+@import "../variables/colors";
+
+@mixin card-style {
+  box-shadow: 0 2px 20px rgb(49 54 68 / 9%);
+  border-radius: 4px;
+  background-color: $cards-bg-color;
+}

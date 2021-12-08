@@ -24,9 +24,7 @@ th {
 }
 
 .table-content {
-  box-shadow: 0 2px 20px rgb(49 54 68 / 9%);
-  border-radius: 4px;
-  background-color: $cards-bg-color;
+  @include card-style;
   padding: 20px;
 }
 

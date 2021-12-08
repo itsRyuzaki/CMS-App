@@ -36,9 +36,8 @@ h5 {
 }
 
 .form-control:focus {
-  box-shadow: 0 2px 20px rgb(49 54 68 / 9%);
   border-color: $background-color;
-  background-color: $cards-bg-color;
+  @include card-style;
 }
 
 // Only for radio button labels
@@ -49,14 +48,13 @@ h5 {
 
 // Styles for complete section
 .section-wrapper {
-  box-shadow: 0 2px 20px rgb(49 54 68 / 9%);
-  border-radius: 4px;
-  background-color: $cards-bg-color;
+  @include card-style;
   padding: 20px;
-  margin-bottom: 60px;
+  margin-bottom: 40px;
   margin-top: 20px;
   @include lg-min {
     padding: 40px;
+    margin-bottom: 60px;
   }
 }
 
