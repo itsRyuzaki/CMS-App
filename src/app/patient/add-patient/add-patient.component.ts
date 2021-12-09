@@ -8,7 +8,7 @@ import {
   PAGE_URLs,
   SESSION_CONFIG,
 } from './../../Core/Config/global-config';
-import { IGenderConfig } from './../../Core/interfaces/add-patient.interface';
+import { IGenderConfig } from '../../Core/interfaces/common.interface';
 import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { DEFAULT_CATEGORY_OPTION, GENDER_CONFIG } from './add-patient.config';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
@@ -24,6 +24,7 @@ export class AddPatientComponent implements OnInit, AfterViewInit {
   genderConfig: IGenderConfig = { ...GENDER_CONFIG };
   buttonIds = { ...BUTTON_IDs };
   categoryOptions = [{ ...DEFAULT_CATEGORY_OPTION }];
+  invalidCategoryId = 'invalid';
   isCategorySelectDisabled = true;
   categoryApiStatus = {
     isLoading: false,
@@ -55,15 +56,12 @@ export class AddPatientComponent implements OnInit, AfterViewInit {
 
     this.initializePatientForm();
 
-    this.platformService.getCategories({}).subscribe(
-      (res) => {
-        if (res.data.length !== 0) {
-          this.categoryOptions = res.data;
-          this.isCategorySelectDisabled = false;
-        }
-      },
-      (err) => {}
+    this.categoryOptions = SessionStorageUtil.getKey(
+      SESSION_CONFIG.categoryConfigKey
     );
+    if (this.categoryOptions && this.categoryOptions.length !== 0) {
+      this.isCategorySelectDisabled = false;
+    }
   }
 
   ngAfterViewInit(): void {
@@ -175,6 +173,10 @@ export class AddPatientComponent implements OnInit, AfterViewInit {
           } else {
             this.categoryOptions.push(response.data);
           }
+          SessionStorageUtil.setKey(
+            SESSION_CONFIG.categoryConfigKey,
+            this.categoryOptions
+          );
           this.categoryApiStatus.isLoading = false;
           this.categoryApiStatus.hasLoaded = true;
           setTimeout(() => {
@@ -199,7 +201,12 @@ export class AddPatientComponent implements OnInit, AfterViewInit {
   }
 
   onSubmitPatientDetails(): void {
-    if (this.addPatientForm.valid && this.dueAmount >= 0) {
+    if (
+      this.addPatientForm.valid &&
+      this.dueAmount >= 0 &&
+      this.addPatientForm.value.medicalDetails.categoryId !==
+        this.invalidCategoryId
+    ) {
       this.pateintDetailApiStatus.isLoading = true;
       const requestBody = this.createPatientDetailsRequest();
       this.platformService.addPatientDetails(requestBody).subscribe(
@@ -221,7 +228,9 @@ export class AddPatientComponent implements OnInit, AfterViewInit {
       this.isInvalidPersonalInfoForm =
         this.addPatientForm.controls.personalDetails.invalid;
       this.isInvalidMedicalDetailsForm =
-        this.addPatientForm.controls.medicalDetails.invalid;
+        this.addPatientForm.controls.medicalDetails.invalid ||
+        this.addPatientForm.value.medicalDetails.categoryId ===
+          this.invalidCategoryId;
       setTimeout(() => {
         this.isInvalidCompleteForm = false;
         this.isInvalidPersonalInfoForm = false;
@@ -241,7 +250,7 @@ export class AddPatientComponent implements OnInit, AfterViewInit {
     };
     const medicalDetails = { ...this.addPatientForm.value.medicalDetails };
     const newPaymentDetails = {
-      ...this.addPatientForm.value.newPaymentDetails,
+      transactions: [],
       categoryId: this.addPatientForm.value.medicalDetails.categoryId,
     };
 
@@ -254,14 +263,13 @@ export class AddPatientComponent implements OnInit, AfterViewInit {
     );
 
     // Update payment details
-    newPaymentDetails.fees = {
-      value: newPaymentDetails.fees,
-      date: HelperUtil.getStringifiedDate(new Date()),
-    };
-    newPaymentDetails.paidAmount = {
-      value: newPaymentDetails.paidAmount,
-      date: HelperUtil.getStringifiedDate(new Date()),
-    };
+    newPaymentDetails.transactions = [
+      {
+        fees: this.addPatientForm.value.newPaymentDetails.fees,
+        paidAmount: this.addPatientForm.value.newPaymentDetails.paidAmount,
+        date: HelperUtil.getConvertedDateObj(new Date()),
+      },
+    ];
 
     return {
       patientDetails,

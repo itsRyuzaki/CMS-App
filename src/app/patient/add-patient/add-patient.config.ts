@@ -1,4 +1,4 @@
-import { IGenderConfig } from '../../Core/interfaces/add-patient.interface';
+import { IGenderConfig } from '../../Core/interfaces/common.interface';
 
 export const GENDER_CONFIG: IGenderConfig = {
   name: 'gender',

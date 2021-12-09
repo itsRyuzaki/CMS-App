@@ -1,3 +1,4 @@
+<app-page-header pageHeading="Add Patient"></app-page-header>
 <form autocomplete="off" [formGroup]="addPatientForm">
   <!-- Personal Details Group -->
 
@@ -120,6 +121,7 @@
 
   <h3>Medical Details</h3>
   <div formGroupName="medicalDetails" class="row section-wrapper">
+    <!-- Visting Date -->
     <div class="form-group row">
       <label for="dateOfVisit" class="col-md-3 col-xl-2"
         >Visiting Date<span class="text-danger">*</span>:
@@ -133,52 +135,7 @@
         />
       </div>
     </div>
-
-    <div class="form-group col-xl-6">
-      <label for="symptoms">Symptoms</label>
-      <textarea
-        class="form-control"
-        id="symptoms"
-        rows="6"
-        formControlName="symptoms"
-      ></textarea>
-    </div>
-    <div class="form-group col-xl-6">
-      <label for="diagnosis">Diagnosis</label>
-      <textarea
-        class="form-control"
-        id="diagnosis"
-        rows="6"
-        formControlName="diagnosis"
-      ></textarea>
-    </div>
-    <div class="form-group col-xl-6">
-      <label for="investigation">Investigation</label>
-      <textarea
-        class="form-control"
-        id="investigation"
-        rows="6"
-        formControlName="investigation"
-      ></textarea>
-    </div>
-    <div class="form-group col-xl-6">
-      <label for="treatment">Treatment</label>
-      <textarea
-        class="form-control"
-        id="treatment"
-        rows="6"
-        formControlName="treatment"
-      ></textarea>
-    </div>
-    <div class="form-group col-xl-6">
-      <label for="notes">Notes</label>
-      <textarea
-        class="form-control"
-        id="notes"
-        rows="6"
-        formControlName="notes"
-      ></textarea>
-    </div>
+    <hr />
     <!-- Physical Examination Details -->
     <div formGroupName="physicalExamination" class="col-md-8 col-xl-6">
       <h5>Physical Examination</h5>
@@ -237,6 +194,53 @@
         </div>
       </div>
     </div>
+
+    <div class="form-group col-xl-6">
+      <label for="symptoms">Symptoms</label>
+      <textarea
+        class="form-control"
+        id="symptoms"
+        rows="6"
+        formControlName="symptoms"
+      ></textarea>
+    </div>
+    <div class="form-group col-xl-6">
+      <label for="diagnosis">Diagnosis</label>
+      <textarea
+        class="form-control"
+        id="diagnosis"
+        rows="6"
+        formControlName="diagnosis"
+      ></textarea>
+    </div>
+    <div class="form-group col-xl-6">
+      <label for="investigation">Investigation</label>
+      <textarea
+        class="form-control"
+        id="investigation"
+        rows="6"
+        formControlName="investigation"
+      ></textarea>
+    </div>
+    <div class="form-group col-xl-6">
+      <label for="treatment">Treatment</label>
+      <textarea
+        class="form-control"
+        id="treatment"
+        rows="6"
+        formControlName="treatment"
+      ></textarea>
+    </div>
+    <div class="form-group col-xl-6">
+      <label for="notes">Notes</label>
+      <textarea
+        class="form-control"
+        id="notes"
+        rows="6"
+        formControlName="notes"
+      ></textarea>
+    </div>
+
     <!-- Select Category -->
     <div class="form-group col-md-8 col-xl-6">
       <label for="diseaseCategory"
@@ -248,7 +252,7 @@
         formControlName="categoryId"
         required
       >
-        <option value="invalid" selected disabled hidden>
+        <option [value]="invalidCategoryId" selected disabled hidden>
           Select a category...
         </option>
         <option
@@ -310,6 +314,7 @@
         >
       </div>
     </div>
+    <hr />
     <!-- Follow up date -->
     <div class="form-group row">
       <label for="followUpDate" class="col-md-3 col-xl-2">Follow Up Date</label>
