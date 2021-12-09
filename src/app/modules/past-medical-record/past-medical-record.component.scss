@@ -1,0 +1,14 @@
+@import "../../Core/scss/theme";
+
+h3 {
+  color: $primary-text-color;
+}
+
+.section-wrapper {
+  margin-top: 20px;
+  margin-bottom: 40px;
+}
+
+.loader-card-small {
+  height: 100px;
+}
