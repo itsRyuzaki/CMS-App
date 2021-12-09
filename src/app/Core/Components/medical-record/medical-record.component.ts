@@ -9,7 +9,7 @@ import { IMedicalRecord } from './../../interfaces/api-response.interface';
 export class MedicalRecordComponent implements OnInit {
 
   @Input() recordConfig: IMedicalRecord;
-  @Input() category;
+  @Input() category: string;
   constructor() { }
 
   ngOnInit(): void {
