@@ -36,24 +36,7 @@ export class ViewPatientComponent implements OnInit {
     isLoading: true,
     hasError: false,
   };
-  medicalRecordStatus: {
-    data: Partial<IMedicalRecord>[];
-    isLoading: boolean;
-    hasError: boolean;
-  } = {
-    data: [],
-    isLoading: true,
-    hasError: false,
-  };
-  paymentRecordStatus: {
-    data: Partial<IPaymentModel>[];
-    isLoading: boolean;
-    hasError: boolean;
-  } = {
-    data: [],
-    isLoading: true,
-    hasError: false,
-  };
+
   constructor(
     private readonly platformService: PlatformService,
     private readonly route: ActivatedRoute,
@@ -68,8 +51,6 @@ export class ViewPatientComponent implements OnInit {
       this.categoriesMasterData
     );
     this.getPatientDetails();
-    this.getMedicalRecords();
-    this.getPaymentRecords();
   }
 
   getPatientDetails(): void {
@@ -87,70 +68,6 @@ export class ViewPatientComponent implements OnInit {
       (err) => {
         this.personalInfoStatus = {
           ...this.personalInfoStatus,
-          isLoading: false,
-          hasError: true,
-        };
-      }
-    );
-  }
-
-  getMedicalRecords(): void {
-    const requestBody = RequestUtil.medicalRecords(true, {
-      patientId: this.patientId,
-    });
-    this.platformService.getMedicalRecords(requestBody).subscribe(
-      (res) => {
-        this.medicalRecordStatus = {
-          ...this.medicalRecordStatus,
-          data: res.medicalRecords,
-          isLoading: false,
-        };
-
-        this.medicalRecordStatus.data.forEach((element) => {
-          element.stringifiedVisitDate = HelperUtil.getStringifiedDate(
-            element.dateOfVisit,
-            true
-          );
-          element.stringifiedFollowUpDate = HelperUtil.getStringifiedDate(
-            element.followUpDate,
-            true
-          );
-        });
-      },
-      (err) => {
-        this.medicalRecordStatus = {
-          ...this.medicalRecordStatus,
-          isLoading: false,
-          hasError: true,
-        };
-      }
-    );
-  }
-
-  getPaymentRecords(): void {
-    const requestBody = RequestUtil.paymentRecords(true, {
-      patientId: this.patientId,
-    });
-    this.platformService.getPaymentRecords(requestBody).subscribe(
-      (res) => {
-        this.paymentRecordStatus = {
-          ...this.paymentRecordStatus,
-          data: res.paymentRecords,
-          isLoading: false,
-        };
-        console.log(this.paymentRecordStatus.data);
-        this.paymentRecordStatus.data.forEach((element) => {
-          element.transactions.forEach((transaction) => {
-            transaction.stringifiedDate = HelperUtil.getStringifiedDate(
-              transaction.date,
-              true
-            );
-          });
-        });
-      },
-      (err) => {
-        this.paymentRecordStatus = {
-          ...this.paymentRecordStatus,
           isLoading: false,
           hasError: true,
         };
