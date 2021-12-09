@@ -11,13 +11,11 @@ export const generateErrorDetails = (response, err) => {
   };
 };
 
-export const getDueAmount = (fees, paidAmount) => {
+export const getDueAmount = (transactions) => {
   let totalFees = 0;
-  fees.forEach((fee) => {
-    totalFees += fee.value;
-  });
-  paidAmount.forEach((amount) => {
-    totalFees -= amount.value;
+  transactions.forEach((transaction) => {
+    totalFees += transaction.fees;
+    totalFees -= transaction.paidAmount;
   });
   return totalFees;
 };

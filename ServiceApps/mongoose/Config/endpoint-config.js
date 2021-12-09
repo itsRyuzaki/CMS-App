@@ -5,8 +5,8 @@ export const ENDPOINT_CONFIG = {
   addPatientDetails: "/patient/add",
   updatePatientDetails: "/patient/update",
   getPatients: "/patients",
-  pendingPatients: "/patients/pending",
-  followUpPatients: "/patients/followup",
+  paymentRecords: "/paymentrecords",
+  medicalRecords: "/medicalDetails",
   addCategory: "/category/add",
   getCategories: "/categories",
 };

@@ -14,6 +14,7 @@ import { PatientModel } from "./mongoose/Models/patient-model.js";
 import { PaymentDetailModel } from "./mongoose/Models/payment-detail.js";
 import { UserModel } from "./mongoose/Models/user-model.js";
 import { crudUtil } from "./mongoose/Utility/crud-utility.js";
+import { getDueAmount } from "./mongoose/Utility/helper-utility.js";
 
 const app = express();
 mongoose.connect("mongodb://localhost:27017/CMS-App-DB");
@@ -141,37 +142,48 @@ app.post(ENDPOINT_CONFIG.getClinics, async (req, res) => {
  * Add new patient details (+ medical and payment details)
  */
 app.post(ENDPOINT_CONFIG.addPatientDetails, async (req, res) => {
+  const response = {
+    data: {},
+    errorDetails: [],
+  };
   const uniqueId = uuidv4();
+
+  const dueAmount = getDueAmount(req.body.newPaymentDetails.transactions);
+
   req.body.patientDetails["patientId"] = uniqueId;
   req.body.medicalDetails["patientId"] = uniqueId;
-  req.body.newPaymentDetails["patientId"] = uniqueId;
+
+  req.body.patientDetails["pendingAmount"] = dueAmount;
+
   console.log(uniqueId);
 
   const patientResponse = await crudUtil.create(
     req.body.patientDetails,
     PatientModel
   );
+  if (patientResponse.errorDetails !== null) {
+    response.errorDetails.push(patientResponse.errorDetails);
+  }
+
   const medicalResponse = await crudUtil.create(
     req.body.medicalDetails,
     MedicalDetailModel
   );
-  const newPaymentResponse = await crudUtil.create(
-    req.body.newPaymentDetails,
-    PaymentDetailModel
-  );
 
-  const response = {
-    data: {},
-    errorDetails: [],
-  };
-  if (patientResponse.errorDetails !== null) {
-    response.errorDetails.push(patientResponse.errorDetails);
-  }
   if (medicalResponse.errorDetails !== null) {
     response.errorDetails.push(medicalResponse.errorDetails);
   }
-  if (newPaymentResponse.errorDetails !== null) {
-    response.errorDetails.push(newPaymentResponse.errorDetails);
+
+  if (dueAmount > 0) {
+    req.body.newPaymentDetails["patientId"] = uniqueId;
+    req.body.newPaymentDetails["dueAmount"] = dueAmount;
+    const newPaymentResponse = await crudUtil.create(
+      req.body.newPaymentDetails,
+      PaymentDetailModel
+    );
+    if (newPaymentResponse.errorDetails !== null) {
+      response.errorDetails.push(newPaymentResponse.errorDetails);
+    }
   }
 
   if (response.errorDetails.length !== 0) {
@@ -195,7 +207,24 @@ app.post(ENDPOINT_CONFIG.updatePatientDetails, async (req, res) => {
     errorDetails: [],
   };
 
+  let newDueAmount = 0;
+  let oldDueAmount = 0;
+
+  let oldPaymentDetails = req.body.oldPaymentDetails;
+
+  if (req.body.newPaymentDetails) {
+    newDueAmount = getDueAmount(req.body.newPaymentDetails.transactions);
+  }
+
+  if (oldPaymentDetails) {
+    oldPaymentDetails.forEach((detail) => {
+      detail["dueAmount"] = getDueAmount(detail.transactions);
+      oldDueAmount += detail.dueAmount;
+    });
+  }
   if (req.body["patientDetails"]) {
+    req.body.patientDetails["pendingAmount"] = newDueAmount + oldDueAmount;
+
     let patientResponse = await crudUtil.updateOne(
       { patientId: req.body.patientId },
       req.body.patientDetails,
@@ -220,7 +249,8 @@ app.post(ENDPOINT_CONFIG.updatePatientDetails, async (req, res) => {
     }
   }
 
-  if (req.body.newPaymentDetails) {
+  if (req.body.newPaymentDetails && newDueAmount > 0) {
+    req.body.newPaymentDetails["dueAmount"] = newDueAmount;
     req.body.newPaymentDetails["patientId"] = req.body.patientId;
     let newPaymentResponse = await crudUtil.create(
       req.body.newPaymentDetails,
@@ -232,10 +262,10 @@ app.post(ENDPOINT_CONFIG.updatePatientDetails, async (req, res) => {
     }
   }
 
-  if (req.body.oldPaymentDetails) {
-    for (const oldPaymentDetail of req.body.oldPaymentDetails) {
+  if (oldPaymentDetails) {
+    for (const oldPaymentDetail of oldPaymentDetails) {
       let oldPaymentResponse = {};
-      if (oldPaymentDetail.dueAmount === 0) {
+      if (oldPaymentDetail.dueAmount <= 0) {
         console.log("Deleting completed payment details");
         oldPaymentResponse = await crudUtil.deleteOne(
           {
@@ -282,24 +312,24 @@ app.post(ENDPOINT_CONFIG.getPatients, async (req, res) => {
 });
 
 /**
- * Get list of patients with pending payments
+ * Get payment records (+ patient details if page type is pending)
  */
-app.post(ENDPOINT_CONFIG.pendingPatients, async (req, res) => {
+app.post(ENDPOINT_CONFIG.paymentRecords, async (req, res) => {
   let response = { errorDetails: [] };
   // Get all payments with due amount
-  let pendingPatients = await crudUtil.findAll(
-    { ...req.body.filter, dueAmount: { $gt: 0 } },
+  let paymentRecords = await crudUtil.findAll(
+    req.body.filter,
     req.body.projection,
     req.body.queryOptions,
     PaymentDetailModel
   );
-  if (pendingPatients.errorDetails !== null) {
-    response.errorDetails.push(pendingPatients.errorDetails);
+  if (paymentRecords.errorDetails !== null) {
+    response.errorDetails.push(paymentRecords.errorDetails);
     res.status(420);
   } else if (req.body.pageType === "PENDING") {
     // Get patient Details
     const patientIds = Array.from(
-      new Set(pendingPatients.data.map((x) => x.patientId))
+      new Set(paymentRecords.data.map((x) => x.patientId))
     );
     const condition = { patientId: { $in: patientIds } };
     const patientDetails = await crudUtil.findAll(
@@ -315,29 +345,29 @@ app.post(ENDPOINT_CONFIG.pendingPatients, async (req, res) => {
       response["patientDetails"] = patientDetails.data;
     }
   }
-  response["pendingPatients"] = pendingPatients.data;
+  response["paymentRecords"] = paymentRecords.data;
   res.send(response);
 });
 
 /**
- * Get list of patients with pending follow ups
+ * Get medical records (+ patient details if page type is follow up)
  */
-app.post(ENDPOINT_CONFIG.followUpPatients, async (req, res) => {
+app.post(ENDPOINT_CONFIG.medicalRecords, async (req, res) => {
   let response = { errorDetails: [] };
   // Get all medical records with follow up date greater than today's date
-  let followUpPatients = await crudUtil.findAll(
+  let medicalRecords = await crudUtil.findAll(
     req.body.filter,
     req.body.projection,
     req.body.queryOptions,
     MedicalDetailModel
   );
-  if (followUpPatients.errorDetails !== null) {
-    response.errorDetails.push(followUpPatients.errorDetails);
+  if (medicalRecords.errorDetails !== null) {
+    response.errorDetails.push(medicalRecords.errorDetails);
     res.status(420);
   } else if (req.body.pageType === "FOLLOW-UP") {
     // Get patient Details
     const patientIds = Array.from(
-      new Set(followUpPatients.data.map((x) => x.patientId))
+      new Set(medicalRecords.data.map((x) => x.patientId))
     );
     const condition = { patientId: { $in: patientIds } };
     const patientDetails = await crudUtil.findAll(
@@ -353,7 +383,7 @@ app.post(ENDPOINT_CONFIG.followUpPatients, async (req, res) => {
       response["patientDetails"] = patientDetails.data;
     }
   }
-  response["followUpPatients"] = followUpPatients.data;
+  response["medicalRecords"] = medicalRecords.data;
   res.send(response);
 });
 
@@ -367,7 +397,7 @@ app.post(ENDPOINT_CONFIG.addCategory, async (req, res) => {
   if (response.errorDetails !== null) {
     res.status(420);
   } else {
-    response['data'] = req.body;
+    response["data"] = req.body;
   }
   res.send(response);
 });
