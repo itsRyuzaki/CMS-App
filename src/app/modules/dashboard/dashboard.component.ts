@@ -1,3 +1,5 @@
+import { SESSION_CONFIG } from './../../Core/Config/global-config';
+import { SessionStorageUtil } from './../../Core/Utility/session-storage.utility';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import {
@@ -46,17 +48,13 @@ export class DashboardComponent implements OnInit {
    * Get a master list of all categories
    */
   getCategories(): void {
-    this.platformService.getCategories({}).subscribe(
-      (res) => {
-        if (res.data.length !== 0) {
-          HelperUtil.createMapFromArray(
-            res.data,
-            this.categoryKey,
-            this.categoriesMasterData
-          );
-        }
-      },
-      (err) => {}
+    const categories = SessionStorageUtil.getKey(
+      SESSION_CONFIG.categoryConfigKey
+    );
+    HelperUtil.createMapFromArray(
+      categories,
+      this.categoryKey,
+      this.categoriesMasterData
     );
   }
 
@@ -64,9 +62,9 @@ export class DashboardComponent implements OnInit {
    * Get pending patients list and populate data required for the table
    */
   getPendingPatients(): void {
-    const requestBody = RequestUtil.pendingPatients(false, {}, 5);
+    const requestBody = RequestUtil.paymentRecords(false, {}, 5);
 
-    this.platformService.getPendingPatients(requestBody).subscribe(
+    this.platformService.getPaymentRecords(requestBody).subscribe(
       (res) => {
         HelperUtil.createMapFromArray(
           res.patientDetails,
@@ -74,7 +72,7 @@ export class DashboardComponent implements OnInit {
           this.patientsMasterData
         );
 
-        this.pendingPatients.data = res.pendingPatients.map(
+        this.pendingPatients.data = res.paymentRecords.map(
           (details: any): IRowDataConfig => {
             console.log(details[this.patientkey]);
             return {
@@ -108,8 +106,8 @@ export class DashboardComponent implements OnInit {
    * Get Follow up patients list and populate data required for the table
    */
   getFollowUpPatients(): void {
-    const requestBody = RequestUtil.followUpPatients(false, {}, 5);
-    this.platformService.getFollowUpPatients(requestBody).subscribe(
+    const requestBody = RequestUtil.medicalRecords(false, {}, 5);
+    this.platformService.getMedicalRecords(requestBody).subscribe(
       (res) => {
         HelperUtil.createMapFromArray(
           res.patientDetails,
@@ -117,7 +115,7 @@ export class DashboardComponent implements OnInit {
           this.patientsMasterData
         );
 
-        this.followUpPatients.data = res.followUpPatients.map(
+        this.followUpPatients.data = res.medicalRecords.map(
           (details: any): IRowDataConfig => {
             return {
               rowData: {
