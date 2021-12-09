@@ -1,1 +1,81 @@
-<p>view-patient works!</p>
+<app-page-header pageHeading="Patient Details"></app-page-header>
+<div class="edit-btn-mobile">
+  <app-button
+    [btnId]="buttonIds.editPateint"
+    (btnClicked)="onEditPatientBtnClicked()"
+  ></app-button>
+</div>
+<div class="section-wrapper row">
+  <div class="col-md-8 col-lg-7 col-xl-5">
+    <div class="loader-card" *ngIf="personalInfoStatus.isLoading">
+      <app-skeleton-loader></app-skeleton-loader>
+    </div>
+    <div class="personal-info-card" *ngIf="!personalInfoStatus.isLoading">
+      <h4>{{ personalInfoStatus.data.name }}</h4>
+      <h6>{{ personalInfoStatus.data.gender }}</h6>
+      <br />
+      <p>
+        Age:
+        <span
+          >{{ personalInfoStatus.data.age }}(as on
+          {{ personalInfoStatus.data.lastModified }})</span
+        >
+      </p>
+      <p>
+        Phone Numbers:
+        <span>{{ personalInfoStatus.data.phoneNumber.primary }}</span>
+        <span *ngIf="personalInfoStatus.data.phoneNumber.secondary"
+          >, {{ personalInfoStatus.data.phoneNumber.secondary }}</span
+        >
+      </p>
+      <br />
+      <p>Address Details</p>
+      <p>
+        <span>{{ personalInfoStatus.data.address.area }}</span>
+      </p>
+      <p>
+        <span
+          >{{ personalInfoStatus.data.address.city }},
+          {{ personalInfoStatus.data.address.state }} -
+          {{ personalInfoStatus.data.address.pincode }}</span
+        >
+      </p>
+    </div>
+  </div>
+  <div class="col-md-4 col-lg-5 col-xl-7 edit-btn-normal">
+    <app-button
+      [btnId]="buttonIds.editPateint"
+      (btnClicked)="onEditPatientBtnClicked()"
+    ></app-button>
+  </div>
+</div>
+
+<!-- Past Medical Records -->
+<h3>Past Medical Records</h3>
+<div class="section-wrapper row">
+  <div class="loader-card-small" *ngIf="medicalRecordStatus.isLoading">
+    <app-skeleton-loader></app-skeleton-loader>
+  </div>
+  <div *ngIf="!medicalRecordStatus.isLoading">
+    <app-medical-record
+      *ngFor="let medicalRecord of medicalRecordStatus.data"
+      [category]="categoriesMasterData.get(medicalRecord.categoryId)?.type"
+      [recordConfig]="medicalRecord"
+    ></app-medical-record>
+  </div>
+</div>
+
+<!-- Payment Records -->
+<h3>Payment History</h3>
+<div class="section-wrapper row">
+  <div class="loader-card-small" *ngIf="paymentRecordStatus.isLoading">
+    <app-skeleton-loader></app-skeleton-loader>
+  </div>
+  <div *ngIf="!paymentRecordStatus.isLoading">
+    <app-payment-record
+      *ngFor="let paymentRecord of paymentRecordStatus.data"
+      [category]="categoriesMasterData.get(paymentRecord.categoryId)?.type"
+      [paymentConfig]="paymentRecord"
+    ></app-payment-record>
+  </div>
+</div>
