@@ -1,6 +1,6 @@
 @import "../variables/breakpoints";
 
-// max-width : 576px
+// max-width : 767px
 @mixin sm-max {
   @media only screen and (max-width: $screen-sm-max) {
     @content;
