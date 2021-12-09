@@ -37,16 +37,16 @@ export class PlatformService {
     return this.http.get(`${ENDPOINT_PREFIX}${ENDPOINT_CONFIG.getUserDetails}`);
   }
 
-  getPendingPatients(requestBody): Observable<any> {
+  getPaymentRecords(requestBody): Observable<any> {
     return this.http.post(
-      `${ENDPOINT_PREFIX}${ENDPOINT_CONFIG.pendingPatients}`,
+      `${ENDPOINT_PREFIX}${ENDPOINT_CONFIG.paymentRecords}`,
       requestBody
     );
   }
 
-  getFollowUpPatients(requestBody): Observable<any> {
+  getMedicalRecords(requestBody): Observable<any> {
     return this.http.post(
-      `${ENDPOINT_PREFIX}${ENDPOINT_CONFIG.followUpPatients}`,
+      `${ENDPOINT_PREFIX}${ENDPOINT_CONFIG.medicalRecords}`,
       requestBody
     );
   }
