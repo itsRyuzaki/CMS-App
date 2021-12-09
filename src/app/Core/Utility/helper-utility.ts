@@ -1,4 +1,5 @@
-import { MONTHS } from '../Config/global-config';
+import { IConvertedDate } from './../interfaces/common.interface';
+import { MONTHS } from './../Config/global-config';
 
 export const HelperUtil = {
   /**
@@ -17,7 +18,7 @@ export const HelperUtil = {
    * @param date Date Object
    * @returns Returns a standard date object
    */
-  getConvertedDateObj(date: Date) {
+  getConvertedDateObj(date: Date): IConvertedDate {
     return {
       day: date.getDate(),
       month: date.getMonth(),

@@ -1,48 +1,63 @@
+import { HelperUtil } from './helper-utility';
+import {
+  DETAILS_PAGE,
+  PENDING_PAGE,
+  FOLLOW_UP_PAGE,
+} from './../Config/global-config';
+
 export const RequestUtil = {
-  pendingPatients: (
-    isDetailsPage: boolean,
-    filter: any,
-    limit: number
-  ) => {
+  paymentRecords: (isDetailsPage: boolean, filter: any, limit: number = -1) => {
     return {
       filter,
       projection: {},
       queryOptions: {
-        limit,
+        ...(limit !== -1 && { limit }),
       },
-      pageType: isDetailsPage ? 'DETAILS' : 'PENDING',
+      pageType: isDetailsPage ? DETAILS_PAGE : PENDING_PAGE,
     };
   },
-  followUpPatients: (
-    isDetailsPage: boolean,
-    filter: any,
-    limit: number
-  ) => {
+  medicalRecords: (isDetailsPage: boolean, filter: any, limit: number = -1) => {
+    const dateObj = HelperUtil.getConvertedDateObj(new Date());
+    const dateFilter = {
+      'followUpDate.day': {
+        $gte: dateObj.day,
+      },
+      'followUpDate.month': {
+        $gte: dateObj.month,
+      },
+      'followUpDate.year': {
+        $gte: dateObj.year,
+      },
+    };
+    const projection = {
+      diagnosis: 0,
+      symptoms: 0,
+      investigation: 0,
+      treatment: 0,
+      notes: 0,
+      physicalExamination: 0,
+    };
     return {
       filter: {
-        'followUpDate.day': {
-          $gt: 9,
-        },
-        'followUpDate.month': {
-          $gte: 11,
-        },
-        'followUpDate.year': {
-          $gte: 2021,
-        },
+        ...filter,
+        ...(isDetailsPage ? {} : dateFilter),
       },
       projection: {
-        diagnosis: 0,
-        symptoms: 0,
-        investigation: 0,
-        treatment: 0,
-        notes: 0,
-        physicalExamination: 0,
+        ...(isDetailsPage ? {} : projection),
       },
       queryOptions: {
-        skip: 0,
-        limit: 5,
+        ...(limit !== -1 && { limit }),
       },
-      pageType: 'FOLLOW-UP',
+      pageType: isDetailsPage ? DETAILS_PAGE : FOLLOW_UP_PAGE,
+    };
+  },
+  patientDetails: (filter: any, limit: number = -1) => {
+    return {
+      filter,
+      projection: {},
+      queryOptions: {
+        ...(limit !== -1 && { limit }),
+      },
     };
   },
 };
