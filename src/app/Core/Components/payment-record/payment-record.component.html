@@ -1,0 +1,23 @@
+<mat-expansion-panel>
+  <mat-expansion-panel-header>
+    <mat-panel-title> Category: {{ category }} </mat-panel-title>
+    <mat-panel-description>
+      Pending Amount: {{ paymentConfig.dueAmount }}
+    </mat-panel-description>
+  </mat-expansion-panel-header>
+  <hr />
+  <div class="row">
+    <div
+      class="col-md-6 col-lg-4 col-xl-3 payment-card"
+      *ngFor="let transaction of paymentConfig.transactions"
+    >
+      <h6>{{ transaction.stringifiedDate }}</h6>
+      <p *ngIf="transaction.fees > 0">
+        Fees: <span>{{ transaction.fees }}</span>
+      </p>
+      <p>
+        Paid Amount: <span>{{ transaction.paidAmount }}</span>
+      </p>
+    </div>
+  </div>
+</mat-expansion-panel>
