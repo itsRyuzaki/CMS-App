@@ -7,6 +7,9 @@ export const HelperUtil = {
    * @returns Current date in standard format as string
    */
   getStringifiedDate(date: any, isConvertedDate: boolean = false): string {
+    if (date === null) {
+      return 'None';
+    }
     if (!isConvertedDate) {
       date = this.getConvertedDateObj(date);
     }
@@ -26,12 +29,12 @@ export const HelperUtil = {
     };
   },
 
- /**
-  * Creates a map from the given array
-  * @param data Data object of type array
-  * @param key key to check in data object
-  * @param mapObj Mapped object
-  */
+  /**
+   * Creates a map from the given array
+   * @param data Data object of type array
+   * @param key key to check in data object
+   * @param mapObj Mapped object
+   */
   createMapFromArray(data: any[], key: string, mapObj: Map<any, any>): void {
     data.forEach((element) => {
       if (!mapObj.has(element[key])) {
