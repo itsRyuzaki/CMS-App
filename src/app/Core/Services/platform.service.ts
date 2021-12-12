@@ -19,6 +19,13 @@ export class PlatformService {
     );
   }
 
+  updatePatientDetails(requestBody): Observable<any> {
+    return this.http.post(
+      `${ENDPOINT_PREFIX}${ENDPOINT_CONFIG.updatePatientDetails}`,
+      requestBody
+    );
+  }
+
   saveCategory(requestBody): Observable<any> {
     return this.http.post(
       `${ENDPOINT_PREFIX}${ENDPOINT_CONFIG.addCategory}`,
