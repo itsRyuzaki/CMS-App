@@ -5,10 +5,50 @@
     <app-skeleton-loader></app-skeleton-loader>
   </div>
   <div *ngIf="!paymentRecordStatus.isLoading">
-    <app-payment-record
-      *ngFor="let paymentRecord of paymentRecordStatus.data"
-      [category]="categoriesMasterData.get(paymentRecord.categoryId)?.type"
-      [paymentConfig]="paymentRecord"
-    ></app-payment-record>
+    <div
+      *ngFor="let paymentConfig of paymentRecordStatus.data"
+      class="panel-wrapper"
+    >
+      <mat-expansion-panel>
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            Category:
+            {{ categoriesMasterData.get(paymentConfig.categoryId)?.type }}
+          </mat-panel-title>
+          <mat-panel-description>
+            Pending Amount: ₹{{ paymentConfig.dueAmount }}
+          </mat-panel-description>
+        </mat-expansion-panel-header>
+        <hr />
+        <div class="add-btn">
+          <app-button
+            *ngIf="isEditPage"
+            [btnId]="buttonIds.add"
+            (btnClicked)="
+              onAddCTAClicked(
+                categoriesMasterData.get(paymentConfig.categoryId)
+              )
+            "
+          ></app-button>
+          <div *ngIf="isPaymentAdded[paymentConfig.categoryId]">
+            <span class="text-success">Payment Details Added!</span>
+          </div>
+        </div>
+        <div class="row">
+          <div
+            class="col-md-6 col-lg-4 col-xl-3 payment-card"
+            *ngFor="let transaction of paymentConfig.transactions"
+          >
+            <h6>{{ transaction.stringifiedDate }}</h6>
+            <p *ngIf="transaction.fees > 0">
+              Fees: <span>₹{{ transaction.fees }}</span>
+            </p>
+            <p>
+              Paid Amount: <span>₹{{ transaction.paidAmount }}</span>
+            </p>
+          </div>
+        </div>
+      </mat-expansion-panel>
+    </div>
   </div>
 </div>

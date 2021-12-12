@@ -1,14 +1,23 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
+import { AddPaymentDialogComponent } from './../../Core/Components/Modals/add-payment-dialog/add-payment-dialog.component';
 import {
-  CATEGORY_KEY, SESSION_CONFIG
-} from 'src/app/Core/Config/global-config';
+  BUTTON_IDs,
+  CATEGORY_KEY,
+  SESSION_CONFIG
+} from './../../Core/Config/global-config';
 import {
-  ICategoryModel, IPaymentModel
-} from 'src/app/Core/interfaces/api-response.interface';
-import { PlatformService } from 'src/app/Core/Services/platform.service';
-import { HelperUtil } from 'src/app/Core/Utility/helper-utility';
-import { RequestUtil } from 'src/app/Core/Utility/request-utility';
-import { SessionStorageUtil } from 'src/app/Core/Utility/session-storage.utility';
+  ICategoryModel,
+  IPaymentModel
+} from './../../Core/interfaces/api-response.interface';
+import {
+  IDialogResponse,
+  IPaymentDialogRequest
+} from './../../Core/interfaces/common.interface';
+import { PlatformService } from './../../Core/Services/platform.service';
+import { HelperUtil } from './../../Core/Utility/helper-utility';
+import { RequestUtil } from './../../Core/Utility/request-utility';
+import { SessionStorageUtil } from './../../Core/Utility/session-storage.utility';
 
 @Component({
   selector: 'app-payment-history',
@@ -17,6 +26,7 @@ import { SessionStorageUtil } from 'src/app/Core/Utility/session-storage.utility
 })
 export class PaymentHistoryComponent implements OnInit {
   @Input() patientId: string;
+  @Input() isEditPage = false;
   categoriesMasterData = new Map<string, ICategoryModel>();
   paymentRecordStatus: {
     data: Partial<IPaymentModel>[];
@@ -27,7 +37,12 @@ export class PaymentHistoryComponent implements OnInit {
     isLoading: true,
     hasError: false,
   };
-  constructor(private readonly platformService: PlatformService) {}
+  buttonIds = { ...BUTTON_IDs };
+  isPaymentAdded: { [x: string]: boolean } = {};
+  constructor(
+    private readonly platformService: PlatformService,
+    public dialog: MatDialog
+  ) {}
 
   ngOnInit(): void {
     HelperUtil.createMapFromArray(
@@ -51,6 +66,7 @@ export class PaymentHistoryComponent implements OnInit {
         };
         console.log(this.paymentRecordStatus.data);
         this.paymentRecordStatus.data.forEach((element) => {
+          this.isPaymentAdded[element.categoryId] = false;
           element.transactions.forEach((transaction) => {
             transaction.stringifiedDate = HelperUtil.getStringifiedDate(
               transaction.date,
@@ -67,5 +83,37 @@ export class PaymentHistoryComponent implements OnInit {
         };
       }
     );
+  }
+
+  onAddCTAClicked(category: ICategoryModel): void {
+    const request: IPaymentDialogRequest = {
+      oldPaymentDetails: this.paymentRecordStatus.data,
+      category,
+    };
+    const dialogRef = this.dialog.open(AddPaymentDialogComponent, {
+      data: { ...request },
+    });
+
+    dialogRef.afterClosed().subscribe((response: IDialogResponse) => {
+      console.log(response);
+      if (response.isSuccess) {
+        const index = this.paymentRecordStatus.data.findIndex(
+          (detail) => detail.categoryId === category.categoryId
+        );
+        this.paymentRecordStatus.data[index].transactions.push({
+          ...response.data.transaction,
+          stringifiedDate: HelperUtil.getStringifiedDate(
+            response.data.transaction.date,
+            true
+          ),
+        });
+        this.paymentRecordStatus.data[index].dueAmount =
+          response.data.dueAmount;
+        this.isPaymentAdded[category.categoryId] = true;
+        setTimeout(() => {
+          this.isPaymentAdded[category.categoryId] = false;
+        }, 3000);
+      }
+    });
   }
 }

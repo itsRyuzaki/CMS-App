@@ -4,12 +4,33 @@ h3 {
   color: $primary-text-color;
 }
 
-
 .section-wrapper {
   margin-top: 20px;
   margin-bottom: 40px;
 }
 
+.panel-wrapper {
+  margin-bottom: 12px;
+}
+
 .loader-card-small {
   height: 100px;
+}
+
+.payment-card {
+  padding-bottom: 16px;
+  h6 {
+    margin-bottom: 0.75rem;
+    border-bottom: 4px solid $primary-text-color;
+    border-radius: 2px;
+    display: inline-block;
+  }
+  p {
+    padding-left: 10px;
+    margin-bottom: 2px;
+  }
+}
+
+.add-btn {
+  text-align: right;
 }
