@@ -2,9 +2,13 @@ export const BUTTON_IDs = {
   addPatient: 'addPatientBtn',
   searchRedirect: 'searchRedirectBtn',
   addCategory: 'addCategoryBtn',
-  saveCategory: 'saveCategoryBtn',
   submitPatientForm: 'submitPatientFormBtn',
-  submitCategoryForm: 'submitCategoryFormBtn',
+  editPateint: 'editPatientBtn',
+  addMedicalRecord: 'addMedicalRecord',
+  save: 'saveBtn',
+  cancel: 'cancelBtn',
+  add: 'addBtn',
+  update: 'updateBtn',
 };
 
 export const MONTHS = [
@@ -43,3 +47,9 @@ export const PAGE_URLs = {
     return ['/patient', id, 'edit'];
   },
 };
+
+export const DETAILS_PAGE = 'DETAILS';
+export const PENDING_PAGE = 'PENDING';
+export const FOLLOW_UP_PAGE = 'FOLLOW-UP';
+
+export const CATEGORY_KEY = 'categoryId';
