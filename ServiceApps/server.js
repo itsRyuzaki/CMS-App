@@ -265,7 +265,8 @@ app.post(ENDPOINT_CONFIG.updatePatientDetails, async (req, res) => {
   if (oldPaymentDetails) {
     for (const oldPaymentDetail of oldPaymentDetails) {
       let oldPaymentResponse = {};
-      if (oldPaymentDetail.dueAmount <= 0) {
+      let due = getDueAmount(oldPaymentDetail.transactions);
+      if (due <= 0) {
         console.log("Deleting completed payment details");
         oldPaymentResponse = await crudUtil.deleteOne(
           {
@@ -276,6 +277,7 @@ app.post(ENDPOINT_CONFIG.updatePatientDetails, async (req, res) => {
         );
       } else {
         console.log("Updating previous payment details");
+        oldPaymentDetail["dueAmount"] = due;
         oldPaymentResponse = await crudUtil.updateOne(
           {
             patientId: req.body.patientId,
