@@ -19,15 +19,26 @@ export const RequestUtil = {
   medicalRecords: (isDetailsPage: boolean, filter: any, limit: number = -1) => {
     const dateObj = HelperUtil.getConvertedDateObj(new Date());
     const dateFilter = {
-      'followUpDate.day': {
-        $gte: dateObj.day,
-      },
-      'followUpDate.month': {
-        $gte: dateObj.month,
-      },
-      'followUpDate.year': {
-        $gte: dateObj.year,
-      },
+      $or: [
+        {
+          'followUpDate.year': {
+            $gt: dateObj.year,
+          },
+        },
+        {
+          'followUpDate.month': {
+            $gt: dateObj.month,
+          },
+          'followUpDate.year': dateObj.year,
+        },
+        {
+          'followUpDate.day': {
+            $gte: dateObj.day,
+          },
+          'followUpDate.month': dateObj.month,
+          'followUpDate.year': dateObj.year,
+        },
+      ],
     };
     const projection = {
       diagnosis: 0,
