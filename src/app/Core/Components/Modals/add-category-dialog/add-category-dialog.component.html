@@ -1,0 +1,44 @@
+<div class="category-form-wrapper">
+  <h2 mat-dialog-title>
+    Add Category
+    <span (click)="onCloseIconClicked()"><i class="bi bi-x"></i></span>
+  </h2>
+  <mat-dialog-content>
+    <!-- Add Category Form -->
+    <div [formGroup]="categoryForm" class="category-form-content">
+      <div class="form-group">
+        <label for="categoryTitle">Type</label>
+        <input
+          type="text"
+          class="form-control"
+          id="categoryTitle"
+          formControlName="categoryTitle"
+        />
+      </div>
+      <div class="form-group">
+        <label for="categoryDescription">Description</label>
+        <textarea
+          class="form-control"
+          id="categoryDescription"
+          rows="3"
+          formControlName="categoryDescription"
+        ></textarea>
+      </div>
+    </div>
+  </mat-dialog-content>
+  <div class="center-btn">
+    <app-button
+      [btnId]="buttonIds.save"
+      [isLoading]="categoryApiStatus.isLoading"
+      (btnClicked)="onSaveCategoryCTAClicked()"
+    >
+    </app-button>
+
+    <span *ngIf="isInvalidCategoryForm" class="text-danger"
+      ><br />All fields are required. Type should be unique.</span
+    >
+    <span *ngIf="categoryApiStatus.hasError" class="text-danger"
+      ><br />Error while saving details...Please try again.</span
+    >
+  </div>
+</div>

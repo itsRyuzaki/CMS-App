@@ -1,0 +1,54 @@
+<div class="payment-form-wrapper">
+  <h2 mat-dialog-title>
+    Add Payment Details
+    <span (click)="onCloseIconClicked()"><i class="bi bi-x"></i></span>
+  </h2>
+  <p>
+    Category: <span>{{ dialogRequest.category.type }}</span>
+  </p>
+  <mat-dialog-content
+    ><div [formGroup]="paymentForm" class="row payment-form-content">
+      <div class="form-group col-6">
+        <label for="fees">Fees(in ₹)</label>
+        <input
+          type="number"
+          class="form-control"
+          id="fees"
+          formControlName="fees"
+        />
+      </div>
+      <div class="form-group col-6">
+        <label for="paidAmount">Paid Amount(in ₹)</label>
+        <input
+          type="number"
+          class="form-control"
+          id="paidAmount"
+          formControlName="paidAmount"
+        />
+      </div>
+      <div class="text-danger" *ngIf="dueAmount >= 0">
+        <span>Total Due: ₹{{ dueAmount }}</span>
+      </div>
+
+      <div class="text-danger" *ngIf="dueAmount < 0">
+        <span>Due Amount can't be negative.</span>
+      </div>
+    </div>
+    <br />
+  </mat-dialog-content>
+  <div class="center-btn">
+    <app-button
+      [btnId]="buttonIds.save"
+      [isLoading]="paymentApiStatus.isLoading"
+      (btnClicked)="onSaveCategoryCTAClicked()"
+    >
+    </app-button>
+
+    <div *ngIf="isInvalidPayemntForm" class="text-danger">
+      <span>Please fill at least one field. Values should be positive.</span>
+    </div>
+    <span *ngIf="paymentApiStatus.hasError" class="text-danger"
+      ><br />Error while saving details...Please try again.</span
+    >
+  </div>
+</div>
