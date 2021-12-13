@@ -1,0 +1,35 @@
+@import "./../../scss/theme";
+
+.form-group {
+  margin-bottom: 24px;
+}
+
+.row {
+  align-items: center;
+}
+
+label {
+  color: $primary-text-color;
+  margin-bottom: 8px;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+// Sections inside a wrapper
+h6 {
+  color: $primary-text-color;
+}
+
+// Content inside input fields
+.form-control,
+.form-control:focus {
+  color: $primary-text-color;
+  padding: 6px 15px;
+  border-radius: 4px;
+  font-weight: 500;
+}
+
+.form-control:focus {
+  border-color: $background-color;
+  @include card-style;
+}
