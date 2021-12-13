@@ -2,10 +2,12 @@ import { ICategoryModel, IPaymentModel } from './api-response.interface';
 
 export interface IGenderConfig {
   name: string;
-  data: {
-    value: string;
-    label: string;
-  }[];
+  data: IOptionConfig[];
+}
+
+export interface IOptionConfig {
+  value: string;
+  label: string;
 }
 
 export interface IConvertedDate {
@@ -22,4 +24,11 @@ export interface IDialogResponse {
 export interface IPaymentDialogRequest {
   oldPaymentDetails: Partial<IPaymentModel>[];
   category: ICategoryModel;
+}
+
+export interface IAgeOption {
+  min: number;
+  max: number;
+  label: string;
+  id: string;
 }
