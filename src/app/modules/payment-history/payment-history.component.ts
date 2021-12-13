@@ -64,7 +64,6 @@ export class PaymentHistoryComponent implements OnInit {
           data: res.paymentRecords,
           isLoading: false,
         };
-        console.log(this.paymentRecordStatus.data);
         this.paymentRecordStatus.data.forEach((element) => {
           this.isPaymentAdded[element.categoryId] = false;
           element.transactions.forEach((transaction) => {
@@ -95,7 +94,6 @@ export class PaymentHistoryComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe((response: IDialogResponse) => {
-      console.log(response);
       if (response.isSuccess) {
         const index = this.paymentRecordStatus.data.findIndex(
           (detail) => detail.categoryId === category.categoryId

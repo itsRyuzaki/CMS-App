@@ -74,7 +74,6 @@ export class DashboardComponent implements OnInit {
 
         this.pendingPatients.data = res.paymentRecords.map(
           (details: any): IRowDataConfig => {
-            console.log(details[this.patientkey]);
             return {
               rowData: {
                 ...details,
