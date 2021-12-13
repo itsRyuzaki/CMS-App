@@ -1,5 +1,7 @@
 <div class="table-wrapper">
-  <h3 class="table-heading">{{ tableDataConfig.tableHeading }}</h3>
+  <h3 class="table-heading" *ngIf="tableDataConfig.tableHeading">
+    {{ tableDataConfig.tableHeading }}
+  </h3>
   <div class="table-loader" *ngIf="isLoading">
     <app-skeleton-loader></app-skeleton-loader>
   </div>
