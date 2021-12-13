@@ -7,13 +7,13 @@ export const HelperUtil = {
    * @returns Current date in standard format as string
    */
   getStringifiedDate(date: any, isConvertedDate: boolean = false): string {
-    if (date === null) {
-      return 'None';
+    if (date) {
+      if (!isConvertedDate) {
+        date = this.getConvertedDateObj(date);
+      }
+      return `${MONTHS[date.month]} ${date.day}, ${date.year}`;
     }
-    if (!isConvertedDate) {
-      date = this.getConvertedDateObj(date);
-    }
-    return `${MONTHS[date.month]} ${date.day}, ${date.year}`;
+    return 'None';
   },
 
   /**
@@ -41,5 +41,33 @@ export const HelperUtil = {
         mapObj.set(element[key], element);
       }
     });
+  },
+
+  /**
+   * Comapres the standard object
+   * @param date1 First date element
+   * @param date2 Second date element
+   * @returns 1,0,-1 depending upon the comparison
+   */
+  dateComparator(date1: IConvertedDate, date2: IConvertedDate): number {
+    if (date1.year > date2.year) {
+      return 1;
+    } else if (date1.year < date2.year) {
+      return -1;
+    } else {
+      if (date1.month > date2.month) {
+        return 1;
+      } else if (date1.month < date2.month) {
+        return -1;
+      } else {
+        if (date1.day > date2.day) {
+          return 1;
+        } else if (date1.day < date2.day) {
+          return -1;
+        } else {
+          return 0;
+        }
+      }
+    }
   },
 };
