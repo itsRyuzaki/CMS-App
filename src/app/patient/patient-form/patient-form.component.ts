@@ -3,15 +3,15 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import {
-    IDialogResponse,
-    IGenderConfig
+  IDialogResponse,
+  IGenderConfig,
 } from '../../Core/interfaces/common.interface';
 import { SessionStorageUtil } from '../../Core/Utility/session-storage.utility';
 import { AddCategoryDialogComponent } from './../../Core/Components/Modals/add-category-dialog/add-category-dialog.component';
 import {
-    BUTTON_IDs,
-    PAGE_URLs,
-    SESSION_CONFIG
+  BUTTON_IDs,
+  PAGE_URLs,
+  SESSION_CONFIG,
 } from './../../Core/Config/global-config';
 import { IPatientModel } from './../../Core/interfaces/api-response.interface';
 import { PlatformService } from './../../Core/Services/platform.service';
@@ -78,10 +78,13 @@ export class PatientFormComponent implements OnInit, AfterViewInit {
       this.showMedicalRecordForm = false;
     }
 
-    this.categoryOptions = SessionStorageUtil.getKey(
+    const categoryConfig = SessionStorageUtil.getKey(
       SESSION_CONFIG.categoryConfigKey
     );
-    if (this.categoryOptions && this.categoryOptions.length !== 0) {
+
+    // if value stored in session then overwrite
+    if (categoryConfig && categoryConfig.length !== 0) {
+      this.categoryOptions = categoryConfig;
       this.isCategorySelectDisabled = false;
     }
   }
