@@ -1,0 +1,14 @@
+<!-- Past Medical Records -->
+<h3>Past Medical Records</h3>
+<div class="section-wrapper row">
+  <div class="loader-card-small" *ngIf="medicalRecordStatus.isLoading">
+    <app-skeleton-loader></app-skeleton-loader>
+  </div>
+  <div *ngIf="!medicalRecordStatus.isLoading">
+    <app-medical-record
+      *ngFor="let medicalRecord of medicalRecordStatus.data"
+      [category]="categoriesMasterData.get(medicalRecord.categoryId)?.type"
+      [recordConfig]="medicalRecord"
+    ></app-medical-record>
+  </div>
+</div>

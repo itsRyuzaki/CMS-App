@@ -1,0 +1,116 @@
+@import "./../../Core/scss/theme";
+
+.form-group {
+  margin-bottom: 24px;
+}
+
+.row {
+  align-items: baseline;
+}
+
+label,
+legend {
+  color: $primary-text-color;
+  margin-bottom: 10px;
+  font-size: 16px;
+  font-weight: 500;
+}
+legend {
+  padding-top: 0px;
+}
+
+// Sections inside a wrapper
+h3,
+h5 {
+  color: $primary-text-color;
+}
+
+// Content inside input fields
+.form-control,
+.form-control:focus {
+  background-color: rgba(237, 241, 245, 0.5);
+  color: $primary-text-color;
+  padding: 6px 15px;
+  border-radius: 4px;
+  font-weight: 500;
+}
+
+.form-control:focus {
+  border-color: $background-color;
+  @include card-style;
+}
+
+// Only for radio button labels
+.form-check-label {
+  margin-left: 3px;
+  font-size: 14px;
+}
+
+// Styles for complete section
+.section-wrapper {
+  @include card-style;
+  padding: 20px;
+  margin-bottom: 40px;
+  margin-top: 20px;
+  @include lg-min {
+    padding: 40px;
+    margin-bottom: 60px;
+  }
+}
+
+// Extra styles for payment wrapper
+.payment-wrapper {
+  @include md-only {
+    width: 75% !important;
+  }
+  @include lg-min {
+    width: 40% !important;
+  }
+}
+
+.personal-details-wrapper {
+  @include md-min {
+    border-right: 1px solid grey;
+  }
+  @include md-only {
+    padding-right: 20px;
+  }
+  @include lg-min {
+    padding-right: 40px;
+  }
+}
+
+.personal-info-loader {
+  height: 300px;
+  margin-bottom: 40px;
+  margin-top: 20px;
+  @include lg-min {
+    margin-bottom: 60px;
+  }
+}
+
+.address-details-wrapper {
+  @include lg-min {
+    padding-left: 40px;
+  }
+  @include md-only {
+    padding-left: 20px;
+  }
+}
+
+.center-btn {
+  text-align: center;
+}
+
+.medical-record-btn {
+  text-align: right;
+  margin-bottom: 20px;
+  margin-top: 20px;
+  @include lg-min {
+    margin-bottom: 40px;
+  }
+}
+
+.due-amount {
+  margin-left: 10px;
+}

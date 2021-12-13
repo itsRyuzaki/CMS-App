@@ -1,0 +1,51 @@
+@import "../variables/breakpoints";
+
+// max-width : 767px
+@mixin sm-max {
+  @media only screen and (max-width: $screen-sm-max) {
+    @content;
+  }
+}
+
+// min-width : 768px
+@mixin md-min {
+  @media only screen and (min-width: $screen-md) {
+    @content;
+  }
+}
+
+// max-width : 992px
+@mixin md-max {
+  @media only screen and (max-width: $screen-md-max) {
+    @content;
+  }
+}
+
+// min-width : 768px and max-width : 992px
+@mixin md-only {
+  @media only screen and (min-width: $screen-md) and (max-width: $screen-md-max) {
+    @content;
+  }
+}
+
+// min-width : 992px
+@mixin lg-min {
+  @media only screen and (min-width: $screen-lg) {
+    @content;
+  }
+}
+
+// min-width : 992px and max-width : 1200px
+@mixin lg-only {
+  @media only screen and (min-width: $screen-lg) and (max-width: $screen-lg-max) {
+    @content;
+  }
+}
+
+// min-width : 1200px
+@mixin xl-min {
+  @media only screen and (min-width: $screen-xl) {
+    @content;
+  }
+}
+

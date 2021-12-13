@@ -1,0 +1,50 @@
+@import "./../../scss/theme";
+
+.table-wrapper {
+  margin-bottom: 40px;
+  @include xl-min {
+    margin-bottom: 60px;
+  }
+}
+
+table {
+  text-align: center;
+}
+
+th,
+td {
+  &:first-child {
+    text-align: left;
+  }
+}
+
+th {
+  color: $primary-text-color;
+  font-weight: 500;
+}
+
+.table-content {
+  @include card-style;
+  padding: 20px;
+}
+
+.table-heading {
+  padding: 0 0 20px 20px;
+  color: $primary-text-color;
+  font-weight: 400;
+}
+
+.row-click-behavior {
+  cursor: pointer;
+  transition: 0.15s;
+  &:hover {
+    background-color: $inverted-bg-color;
+    td {
+      color: $background-color !important;
+    }
+  }
+}
+
+.table-loader{
+  height: 150px;
+}

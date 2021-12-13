@@ -1,0 +1,30 @@
+<app-page-header pageHeading="Dashboard"></app-page-header>
+<div class="btn-wrapper">
+  <app-button
+    [btnId]="buttonIds.addPatient"
+    (btnClicked)="onAddPatientCTAClicked()"
+    class="add-patient-btn"
+  ></app-button>
+  <app-button
+    [btnId]="buttonIds.searchRedirect"
+    (btnClicked)="onSearchCTAClicked()"
+  ></app-button>
+</div>
+
+<!-- Pending Patients table -->
+<app-table
+  [showViewIcon]="true"
+  [showEditIcon]="true"
+  [tableId]="tableIds.pending"
+  [rowDataConfig]="pendingPatients.data"
+  [isLoading]="pendingPatients.isLoading"
+></app-table>
+
+<!-- Follow Up Patients Table -->
+<app-table
+  [showViewIcon]="true"
+  [showEditIcon]="true"
+  [tableId]="tableIds.followUp"
+  [rowDataConfig]="followUpPatients.data"
+  [isLoading]="followUpPatients.isLoading"
+></app-table>

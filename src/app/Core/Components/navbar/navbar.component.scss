@@ -1,0 +1,43 @@
+@import "./../../scss/theme";
+
+.main-navbar {
+  padding: 10px $global-padding-sm;
+  @include md-min {
+    padding: 12px $global-padding-md;
+  }
+  @include lg-min {
+    padding: 12px $global-padding-lg;
+  }
+  background-color: $navbar-bg-color !important;
+}
+
+.navbar-content {
+  @include lg-min {
+    margin-left: auto;
+  }
+}
+
+.navbar-pills {
+  @include lg-min {
+    display: inline-block !important;
+  }
+}
+
+.navbar-brand {
+  color: $navbar-pills-color;
+  @include md-max {
+    margin-left: auto;
+  }
+}
+
+.nav-link {
+  color: $navbar-pills-color !important;
+  &:hover{
+      color: #d3d5f3 !important;
+  }
+}
+
+.selected-pill{
+    color: white !important;
+}
+

@@ -1,0 +1,68 @@
+@import "./../../../scss/theme";
+
+h2 {
+  color: $primary-text-color;
+  border-bottom: 1px solid $primary-text-color;
+  display: flex;
+  span {
+    margin-left: auto;
+    margin-right: 0;
+    &:hover {
+      cursor: pointer;
+      color: red;
+    }
+  }
+}
+
+p {
+  color: $primary-text-color;
+  font-weight: 500;
+  span {
+    font-weight: 400;
+  }
+}
+
+label {
+  color: $primary-text-color;
+}
+
+.mat-dialog-container {
+  background-color: $cards-bg-color !important;
+}
+
+.payment-form-wrapper {
+  width: 60vw;
+  @include md-only {
+    width: 40vw;
+  }
+  @include lg-min {
+    width: 30vw;
+  }
+}
+
+.payemnt-form-content {
+  padding: 10px;
+}
+
+.form-group {
+  margin-bottom: 24px;
+}
+
+// Content inside input fields
+.form-control,
+.form-control:focus {
+  background-color: rgba(237, 241, 245, 0.5);
+  color: $primary-text-color;
+  padding: 6px 15px;
+  border-radius: 4px;
+  font-weight: 500;
+}
+
+.form-control:focus {
+  border-color: $background-color;
+  @include card-style;
+}
+
+.center-btn {
+  text-align: center;
+}

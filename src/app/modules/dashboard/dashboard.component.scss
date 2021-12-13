@@ -1,0 +1,13 @@
+@import "../../Core/scss/theme";
+
+.btn-wrapper {
+  display: flex;
+  @include md-min {
+    justify-content: flex-end;
+  }
+}
+
+.add-patient-btn {
+  margin-right: 20px;
+  margin-bottom: 40px;
+}

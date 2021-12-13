@@ -1,0 +1,12 @@
+<app-page-header pageHeading="Search Patients"></app-page-header>
+<app-search-bar
+  (formChanges)="handleSearchFormChanges($event)"
+></app-search-bar>
+<!-- Pending Patients table -->
+<app-table
+  [showViewIcon]="true"
+  [showEditIcon]="true"
+  [tableId]="tableIds.allPatients"
+  [rowDataConfig]="patientList.data"
+  [isLoading]="patientList.isLoading"
+></app-table>

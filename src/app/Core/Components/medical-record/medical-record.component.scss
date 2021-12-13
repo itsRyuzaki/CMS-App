@@ -1,0 +1,32 @@
+@import "./../../scss/theme";
+
+h6,
+p {
+  color: $primary-text-color;
+}
+
+p {
+  white-space: pre;
+  font-size: 0.9rem;
+  line-height: 1.5;
+  margin-bottom: 2px;
+}
+
+.medical-card {
+  border: 1px solid $primary-text-color;
+  border-radius: 4px;
+  padding: 20px;
+  h6 {
+    border-bottom: 4px solid $primary-text-color;
+    border-radius: 2px;
+    display: inline-block;
+    margin-bottom: 0.75rem;
+  }
+  p {
+    padding-left: 10px;
+  }
+}
+
+.panel-wrapper {
+  margin-bottom: 12px;
+}
