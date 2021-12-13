@@ -181,7 +181,7 @@
           </div>
           <div class="form-group col-md-6">
             <div class="row">
-              <label for="temperature" class="col-md-8">Temperature</label>
+              <label for="temperature" class="col-md-8">Temperature(°C)</label>
               <div class="col-md-4">
                 <input
                   type="text"
@@ -194,7 +194,7 @@
           </div>
           <div class="form-group col-md-6">
             <div class="row">
-              <label for="pulse" class="col-md-8">Pulse</label>
+              <label for="pulse" class="col-md-8">Pulse(BPM)</label>
               <div class="col-md-4">
                 <input
                   type="text"
@@ -207,7 +207,7 @@
           </div>
           <div class="form-group col-md-6">
             <div class="row">
-              <label for="weight" class="col-md-8">Weight</label>
+              <label for="weight" class="col-md-8">Weight(kg)</label>
               <div class="col-md-4">
                 <input
                   type="text"
@@ -273,7 +273,7 @@
           >Select Category<span class="text-danger">*</span></label
         >
         <select
-          class="form-select"
+          class="form-control form-select"
           id="diseaseCategory"
           formControlName="categoryId"
           required
@@ -368,12 +368,11 @@
 
   <div class="center-btn">
     <span *ngIf="setPatientDetailStatus.hasError" class="text-danger"
-      ><br />There was an error saving details. Please try again.</span
-    >
-    <span class="text-danger" *ngIf="isInvalidCompleteForm"
-      ><br />
-      Please fill the required fields and resolve errors...</span
-    >
+      >There was an error saving details. Please try again.<br
+    /></span>
+    <span class="text-danger" *ngIf="isInvalidCompleteForm">
+      Please fill the required fields and resolve errors...<br
+    /></span>
     <app-button
       *ngIf="!isEditPage"
       [btnId]="buttonIds.submitPatientForm"
