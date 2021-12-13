@@ -212,11 +212,35 @@ app.post(ENDPOINT_CONFIG.updatePatientDetails, async (req, res) => {
 
   let oldPaymentDetails = req.body.oldPaymentDetails;
 
-  if (req.body.newPaymentDetails) {
-    newDueAmount = getDueAmount(req.body.newPaymentDetails.transactions);
+  // During update need to update pendingAmount with updated values
+  // Loose comparison for undefined as well
+  if (oldPaymentDetails == null) {
+    const oldPaymentResposne = await crudUtil.findAll(
+      { patientId: req.body.patientId },
+      {},
+      {},
+      PaymentDetailModel
+    );
+    oldPaymentDetails = oldPaymentResposne.data;
   }
 
+  // this will always be true
   if (oldPaymentDetails) {
+    if (req.body.newPaymentDetails) {
+      newDueAmount = getDueAmount(req.body.newPaymentDetails.transactions);
+
+      const index = oldPaymentDetails.findIndex((details) => {
+        return details.categoryId === req.body.newPaymentDetails.categoryId;
+      })
+      // Payment added for already present index
+      // Add in old details and reset new one.
+      if(index!==-1)
+      {
+        oldPaymentDetails[index].transactions.push(req.body.newPaymentDetails.transactions[0]);
+        req.body.newPaymentDetails = null;
+        newDueAmount = 0;
+      }
+    }
     oldPaymentDetails.forEach((detail) => {
       detail["dueAmount"] = getDueAmount(detail.transactions);
       oldDueAmount += detail.dueAmount;
@@ -423,4 +447,6 @@ app.post(ENDPOINT_CONFIG.getCategories, async (req, res) => {
 app.listen(port, () => {
   console.log();
   console.log(`Backend Server running on http://127.0.0.1:${port}`);
+  console.log("Current Date and Time:");
+  console.log(new Date());
 });
