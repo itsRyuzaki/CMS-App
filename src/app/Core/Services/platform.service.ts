@@ -65,6 +65,13 @@ export class PlatformService {
     );
   }
 
+  getClinics(requestBody): Observable<any> {
+    return this.http.post(
+      `${ENDPOINT_PREFIX}${ENDPOINT_CONFIG.getClinics}`,
+      requestBody
+    );
+  }
+
   loadUserProfile() {
     return new Promise((resolve, reject) => {
       this.getUserProfile().subscribe((response) => {
