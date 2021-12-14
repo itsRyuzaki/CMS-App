@@ -1,0 +1,25 @@
+<app-page-header pageHeading="My Clinics"></app-page-header>
+<div class="section-wrapper row">
+    <div class="loader-card col-md-8 col-lg-6 col-xl-5" *ngIf="clinicListing.isLoading">
+      <app-skeleton-loader></app-skeleton-loader>
+    </div>
+  <div class="col-md-8 col-lg-6 col-xl-5" *ngFor="let clinic of clinicListing.data">
+    
+    <div class="clinic-info-card" >
+      <h3>{{ clinic.name }}</h3>
+      <h6>{{ clinic.doctorInCharge }}</h6>
+      <br />
+      <p>Address Details</p>
+      <p>
+        <span>{{ clinic.address.area }}</span>
+      </p>
+      <p>
+        <span
+          >{{ clinic.address.city }},
+          {{ clinic.address.state }} -
+          {{ clinic.address.pincode }}</span
+        >
+      </p>
+    </div>
+  </div>
+</div>

@@ -58,6 +58,14 @@ export interface ICategoryModel {
   description: string;
 }
 
+export interface IClinicModel {
+  clinicId: string;
+  userId: string;
+  name: string;
+  doctorInCharge: string;
+  address: IAddressModel;
+}
+
 export interface IPaymentModel {
   patientId: string;
   categoryId: string;

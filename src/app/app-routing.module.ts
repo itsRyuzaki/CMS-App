@@ -7,7 +7,7 @@ import { AddPatientComponent } from './patient/add-patient/add-patient.component
 import { EditPatientComponent } from './patient/edit-patient/edit-patient.component';
 import { ViewPatientComponent } from './patient/view-patient/view-patient.component';
 import { PatientListingComponent } from './modules/patient-listing/patient-listing.component';
-import { ClinicListingComponent } from './clinic-listing/clinic-listing.component';
+import { ClinicListingComponent } from './modules/clinic-listing/clinic-listing.component';
 
 const routes: Routes = [
   {

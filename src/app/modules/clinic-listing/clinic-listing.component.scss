@@ -1,0 +1,33 @@
+@import "../../Core/scss/theme";
+
+h3,
+h4,
+h6,
+p {
+  color: $primary-text-color;
+}
+
+.section-wrapper {
+  margin-top: 20px;
+  margin-bottom: 40px;
+}
+
+.clinic-info-card {
+  @include card-style;
+  padding: 20px;
+  @include lg-min {
+    padding: 40px;
+  }
+  p {
+    margin-bottom: 2px;
+    font-weight: 500;
+    span {
+      font-weight: 400;
+    }
+  }
+}
+
+// Loaders
+.loader-card {
+  height: 300px;
+}
