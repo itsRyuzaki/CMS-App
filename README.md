@@ -14,10 +14,9 @@ Application to manage clinical patient records
 - CMS-App runs on -> http://127.0.0.1:4200/ by default
 
 ## Release Notes:
-### RELEASE 0.0.1
+### RELEASE 1.0.0
 - Pending Items
     - Constraints in mongoose models
-    - Clinic Listing
     - Image support in forms
     - Logging in backend server
 - Known Issues
